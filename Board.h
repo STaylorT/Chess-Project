@@ -9,15 +9,16 @@ const int numRanks = 8;
 
 class Board {
 private:
-    Piece board[numFiles][numRanks];
+    Piece board[numRanks][numFiles];
     std::string name;
     std::vector<std::string> moves;
+    int size;
 public:
     Board();
     void printBoard();
-    void pushMove(std::string);
     void setBoard();
-    void printFile(std::string row, int i);
+    void printFile(std::string row, int currRank, int squareHeight);
+    void setSize(int mySize);
 
 };
 
