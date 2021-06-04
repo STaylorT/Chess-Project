@@ -1,31 +1,45 @@
 #include "Board.h"
 #include <iostream>
 #include <math.h>
+#include <string>
 #define WHITE_SQUARE 0xDB
 #define BLACK_SQUARE 0xFF
-#define SIZE_SQUARE 3
 
 Board::Board() {
     setBoard();
+    size = 3;
+}
+
+void Board::setSize(int mySize) {
+    size = mySize;
 }
 
 // print current board to console
 void Board::printBoard() {
+std::cout << std::endl;
     char arr[numFiles] = { 'A','B','C','D','E','F','G','H' };
-    std::cout << "   ";
-    for (int i = 0; i < numFiles; i++) {
-        std::cout << arr[i] << "     ";
+    int filePicker = 0;
+    for (int j = 0; j < numFiles; j++) {
+        for (int i = 0; i < size * 2 + 1; i++) {
+            if (i == ceil(size)) {
+                std::cout << arr[filePicker];
+                filePicker++;
+            }
+            else
+                std::cout << " ";
+
+        }
     }
     std::cout << std::endl << std::endl;
     int invert = 1;
     for (int i = 0; i < numRanks; i++) {
         invert *= -1;
-        for (int k = 0; k < SIZE_SQUARE; k++) {
+        for (int k = 0; k < size; k++) {
             if (invert == -1)
-                printFile("white", i);
+                printFile("white", i, k);
             else
-                printFile("black",i);  
-            if (k == ceil(SIZE_SQUARE / 2))
+                printFile("black",i, k);  
+            if (k == ceil(size / 2))
                 std::cout << "  " <<  i+1;
             std::cout << std::endl;
         }
@@ -33,24 +47,43 @@ void Board::printBoard() {
   
 
 }
-void Board::printFile(std::string row, int fileLetter) {
+void Board::printFile(std::string row, int rank, int squareHeight) {
+    int currFile = 0;
     if (row == "white") {
         for (int j = 0; j < numFiles/2; j++) {
-            for (int i = 0; i < SIZE_SQUARE*2; i++) {
-                std::cout << char(WHITE_SQUARE);
+            for (int i = 0; i < size*2+1; i++) {
+                if (i == ceil(size) && squareHeight == ceil(size / 2) && board[rank][currFile].getName() != "") {
+                    std::cout << board[rank][currFile].getSymbol();
+                }
+                else
+                    std::cout << char(WHITE_SQUARE);
+
             }
-            for (int i = 0; i < SIZE_SQUARE*2; i++) {
-                std::cout << char(BLACK_SQUARE);
+            for (int i = 0; i < size*2 + 1; i++) {
+                if (i== ceil(size) && squareHeight == ceil(size / 2) && board[rank][currFile].getName() != "") {
+                    std::cout << board[rank][currFile].getSymbol();
+                }
+                else
+                    std::cout << char(BLACK_SQUARE);
             }
         }
     }
     else if (row == "black") {
         for (int j = 0; j < numFiles / 2; j++) {
-            for (int i = 0; i < SIZE_SQUARE*2; i++) {
-                std::cout << char(BLACK_SQUARE);
+            for (int i = 0; i < size * 2 + 1; i++) {
+                if (i== ceil(size) && squareHeight == ceil(size/2) && board[rank][currFile].getName() != "") {
+                    std::cout << board[rank][currFile].getSymbol();
+                }
+                else
+                    std::cout << char(BLACK_SQUARE);
+
             }
-            for (int i = 0; i < SIZE_SQUARE*2; i++) {
-                std::cout << char(WHITE_SQUARE);
+            for (int i = 0; i < size * 2 + 1; i++) {
+                if (i== ceil(size) && squareHeight == ceil(size / 2) && board[rank][currFile].getName() != "") {
+                    std::cout << board[rank][currFile].getSymbol();
+                }
+                else
+                    std::cout << char(WHITE_SQUARE);
             }
         }
     }
