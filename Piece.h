@@ -1,21 +1,21 @@
-#pragma once
 #ifndef PIECE_H
 #define PIECE_H
 #include <string>
 
+
 class Piece {
 private:
-    string name;
-    string color;
-    string symbol;
-    int value;
+    std::string name;
+    std::string color;
+    std::string symbol;
 public:
     Piece();
-    void setColor(string name);
-    void setName(string name);
-    string getColor() :
-        string getName();
-    string getSymbol();
+    Piece(std::string name, std::string color);
+    void setColor(std::string name);
+    void setName(std::string name);
+    std::string getColor();
+    std::string getName();
+    std::string getSymbol();
 
 };
 
