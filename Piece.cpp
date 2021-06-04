@@ -1,62 +1,63 @@
 #include "Piece.h"
 
-Board::Piece() {
-    setName("");
-    setColor("");
+
+Piece::Piece() {
+    name = "";
+    color = "";
+    symbol = "♦";
 }
 
-Board::Piece(string name, string color) {
-    setName(name);
-    setColor(color);
+Piece::Piece(std::string myName, std::string myColor) {
+    name = myName;
+    color = myColor;
     if (color == "white") {
         if (name == "pawn")
-            symbol = ♙;
+            symbol = "P";
         else if (name == "bishop")
-            symbol = ♗;
+            symbol = "B";
         else if (name == "knight")
-            symbol = ♘;
+            symbol = "N";
         else if (name == "rook")
-            symbol = ♖;
+            symbol = "R";
         else if (name == "queen")
-            symbol = ♕;
+            symbol = "Q";
         else if (name == "king")
-            symbol = ♔;
+            symbol = "K";
         else
-            symbol = ♦;
+            symbol = "♦";
     }
     else if (color == "black") {
         if (name == "pawn")
-            symbol = ♟;
+            symbol = "P";
         else if (name == "bishop")
-            symbol = ♝;
+            symbol = "B";
         else if (name == "knight")
-            symbol = ♞;
+            symbol = "N";
         else if (name == "rook")
-            symbol = ♜;
+            symbol = "R";
         else if (name == "queen")
-            symbol = ♛;
+            symbol = "Q";
         else if (name == "king")
-            symbol = ♚;
+            symbol = "K";
         else
-            symbol = ♦;
+            symbol = "♦";
     }
     else
-        cout << "invalid color";
-
+        symbol = "no color";
 }
 
-void Board::setName(string name) {
-    name = name;
+void Piece::setName(std::string myName) {
+    name = myName;
 }
-void Board::setColor(string color) {
-    color = color;
+void Piece::setColor(std::string myColor) {
+    color = myColor;
 }
-string Board::getName() {
+std::string Piece::getName() {
     return name;
 }
-string Board::getColor() {
+std::string Piece::getColor() {
     return color;
 }
-string Board::getSymbol() {
+std::string Piece::getSymbol() {
     return symbol;
 }
