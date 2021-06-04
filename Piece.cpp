@@ -4,7 +4,7 @@
 Piece::Piece() {
     name = "";
     color = "";
-    symbol = "♦";
+    symbol = "";
 }
 
 Piece::Piece(std::string myName, std::string myColor) {
@@ -24,7 +24,7 @@ Piece::Piece(std::string myName, std::string myColor) {
         else if (name == "king")
             symbol = "K";
         else
-            symbol = "♦";
+            symbol = " ";
     }
     else if (color == "black") {
         if (name == "pawn")
@@ -40,7 +40,7 @@ Piece::Piece(std::string myName, std::string myColor) {
         else if (name == "king")
             symbol = "K";
         else
-            symbol = "♦";
+            symbol = " ";
     }
     else
         symbol = "no color";
