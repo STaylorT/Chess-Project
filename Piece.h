@@ -2,7 +2,6 @@
 #define PIECE_H
 #include <string>
 
-
 class Piece {
 private:
     std::string name;
@@ -10,7 +9,7 @@ private:
     std::string symbol;
 public:
     Piece();
-    Piece(std::string name, std::string color);
+    Piece(std::string myName, std::string myColor, std::string mySymbol);
     void setColor(std::string name);
     void setName(std::string name);
     std::string getColor();
