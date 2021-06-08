@@ -5,11 +5,17 @@
 #define WHITE_SQUARE 0xDB
 #define BLACK_SQUARE 0xFF
 
+// constructor
 Board::Board() {
     setBoard();
     size = 3;
 }
 
+// processing given move
+void Board::processMove(std::string myMove) {
+
+}
+// allows for changing size of board
 void Board::setSize(int mySize) {
     size = mySize;
 }
@@ -36,9 +42,9 @@ std::cout << std::endl;
         invert *= -1;
         for (int k = 0; k < size; k++) {
             if (invert == -1)
-                printFile("white", i, k);
+                printRank("white", i, k);
             else
-                printFile("black",i, k);  
+                printRank("black",i, k);  
             if (k == ceil(size / 2))
                 std::cout << "  " <<  i+1;
             std::cout << std::endl;
@@ -47,7 +53,9 @@ std::cout << std::endl;
   
 
 }
-void Board::printFile(std::string row, int rank, int squareHeight) {
+
+// helper function for printBoard ; prints a rank (row)
+void Board::printRank(std::string row, int rank, int squareHeight) {
     int currFile = 0;
     if (row == "white") {
         for (int j = 0; j < numFiles/2; j++) {
@@ -59,6 +67,7 @@ void Board::printFile(std::string row, int rank, int squareHeight) {
                     std::cout << char(WHITE_SQUARE);
 
             }
+            currFile++; // increment currFile after writing one square
             for (int i = 0; i < size*2 + 1; i++) {
                 if (i== ceil(size) && squareHeight == ceil(size / 2) && board[rank][currFile].getName() != "") {
                     std::cout << board[rank][currFile].getSymbol();
@@ -66,6 +75,7 @@ void Board::printFile(std::string row, int rank, int squareHeight) {
                 else
                     std::cout << char(BLACK_SQUARE);
             }
+            currFile++; // increment currFile after writing one square
         }
     }
     else if (row == "black") {
@@ -76,8 +86,8 @@ void Board::printFile(std::string row, int rank, int squareHeight) {
                 }
                 else
                     std::cout << char(BLACK_SQUARE);
-
             }
+            currFile++; // increment currFile after writing one square
             for (int i = 0; i < size * 2 + 1; i++) {
                 if (i== ceil(size) && squareHeight == ceil(size / 2) && board[rank][currFile].getName() != "") {
                     std::cout << board[rank][currFile].getSymbol();
@@ -85,10 +95,12 @@ void Board::printFile(std::string row, int rank, int squareHeight) {
                 else
                     std::cout << char(WHITE_SQUARE);
             }
+            currFile++; // increment currFile after writing one square
         }
     }
 
 }
+
 // set board to natural position
 void Board::setBoard() {
     // initialize middle empty squares
@@ -101,57 +113,81 @@ void Board::setBoard() {
     }
     // initialize black pawns
     for (int i = 0; i < numFiles; i++) {
-        Piece blackPawn("pawn", "black");
+        Piece blackPawn("pawn", "black", "P");
         board[6][i] = (blackPawn);
     }
     // initialize black pieces
     for (int i = numFiles-1; i >= 0; i--){
-        Piece tempRook = Piece("rook", "black");
-        board[7][i] = tempRook;
-        Piece tempKnight = Piece("knight", "black");
-        board[7][i] = tempKnight;
-        Piece tempBishop = Piece("bishop", "black");
-        board[7][i] = tempBishop;
-        Piece tempQueen = Piece("queen", "black");
-        board[7][i] = tempQueen;
-        Piece tempKing = Piece("king", "black");
-        board[7][i] = tempKing;
-        Piece tempBishop2 = Piece("bishop", "black");
-        board[7][i] = tempBishop2;
-        Piece tempKnight2 = Piece("knight", "black");
-        board[7][i] = tempKnight2;
-        Piece tempRook2 = Piece("rook", "black");
-        board[7][i] = tempRook2;
+        switch (i) {
+        case 0:
+        case 7:
+        {
+            Piece tempRook = Piece("rook", "black","R");
+            board[7][i] = tempRook;
+        }
+            break;
+        case 1:
+        case 6:
+        {
+            Piece tempKnight = Piece("knight", "black","N");
+            board[7][i] = tempKnight;
+        }
+            break;
+        case 2:
+        case 5:
+        {
+            Piece tempBishop = Piece("bishop", "black","B");
+            board[7][i] = tempBishop;
+        }
+            break;
+        case 4: 
+        {
+            Piece tempQueen = Piece("queen", "black","Q");
+            board[7][i] = tempQueen;
+        }
+            break;
+        case 3:
+        {
+            Piece tempKing = Piece("king", "black","K");
+            board[7][i] = tempKing;
+        }
+            break;
+        default:
+            std::cout << "Board Initiation Problem." << std::endl;
+        }
     }
 
 
     // initialize white pawns
     for (int i = 0; i < numFiles; i++) {
-        Piece whitePawn = Piece("pawn", "white");
+        Piece whitePawn = Piece("pawn", "white","P");
         board[1][i] = whitePawn;
     }
 
     // initialize white pieces
     for (int i = numFiles - 1; i >= 0; i--) {
-        Piece whiteRook = Piece("rook", "white");
-        board[0][i] = whiteRook;
-        Piece whiteKnight = Piece("knight", "white");
-        board[0][i] = whiteKnight;
-        Piece whiteBishop = Piece("bishop", "white");
-        board[0][i] = whiteBishop;
-        Piece whiteKing = Piece("king", "white");
-        board[0][i] = whiteKing;
-        Piece whiteQueen = Piece("queen", "white");
-        board[0][i] = whiteQueen;
-        Piece whiteBishop2 = Piece("bishop", "white");
-        board[0][i] = whiteBishop2;
-        Piece whiteKnight2 = Piece("knight", "white");
-        board[0][i] = whiteKnight2;
-        Piece whiteRook2 = Piece("rook", "white");
-        board[0][i] = whiteRook2;
+        if (i == 7 || i == 0) {
+            Piece tempRook = Piece("rook", "white","R");
+            board[0][i] = tempRook;
+        }
+        else if (i == 6 || i == 1) {
+            Piece tempKnight = Piece("knight", "white","N");
+            board[0][i] = tempKnight;
+        }
+        else if (i == 5 || i == 2) {
+            Piece tempBishop = Piece("bishop", "white","B");
+            board[0][i] = tempBishop;
+        }
+        else if (i == 4) {
+            Piece tempQueen = Piece("queen", "white","Q");
+            board[0][i] = tempQueen;
+        }
+        else if (i == 3) {
+            Piece tempKing = Piece("king", "white","K");
+            board[0][i] = tempKing;
+        }
+        else
+            std::cout << "Board Initiation Problem." << std::endl;
+       
     }
 }
-
-
-
-
