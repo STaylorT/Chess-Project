@@ -17,8 +17,9 @@ public:
     Board();
     void printBoard();
     void setBoard();
-    void printFile(std::string row, int currRank, int squareHeight);
+    void printRank(std::string row, int currRank, int squareHeight);
     void setSize(int mySize);
+    void processMove(std::string myMove);
 
 };
 
