@@ -1,6 +1,7 @@
 #include "Game.h"
 #include <ctype.h>
-
+#include <vector>
+#include "Board.h"
 Game::Game() {
 	name = "";
 	moves = { "" };
@@ -29,15 +30,15 @@ void Game::pushMove(std::string myMove) {
 
 void Game::playGame(std::vector<std::string> myMoves, Board myBoard) {
 	for (int i = 0; i < myMoves.size(); i++) {
-		playMove(myMoves[i], &myBoard);
+		playMove(myMoves[i], myBoard);
 	}
 }
 
 void Game::playMove(std::string myMove, Board myBoard) {
 	// convert to lowercase
 	for (int i = 0; myMove[i]; i++) {
-		myMove[i] = myMove(str[i]);
+		myMove[i] = tolower(myMove[i]);
 	}
-	myBoard.processMove(myMove, turn);
+	//myBoard.processMove(myMove, turn);
 
 }
