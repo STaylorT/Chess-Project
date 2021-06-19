@@ -1,44 +1,202 @@
-#include "Game.h"
-#include <ctype.h>
-#include <vector>
 #include "Board.h"
-Game::Game() {
-	name = "";
-	moves = { "" };
-	turn = 0;
+#include <iostream>
+#include <math.h>
+#include <string>
+#define WHITE_SQUARE 0xDB
+#define BLACK_SQUARE 0xFF
 
-}
-Game::Game(std::string myName, std::vector<std::string> myMoves) {
-	for (int i = 0; i < myMoves.size(); i++) {
-		moves[i] = myMoves[i];
-	}
-	name = myName;
-	turn = 0;
+// constructor
+Board::Board() {
+    setBoard();
+    size = 3;
 }
 
-void Game::setName(std::string myName) {
-	name = myName;
+// processing given move
+void Board::processMove(std::string myMove) {
+    if (myMove == "e4") {
+        Piece pawn("Pawn", "white", "P");
+        board[5][4] = pawn;
+    }
+    else
+        std::cout << "invalid move" << std::endl;
+}
+// allows for changing size of board
+void Board::setSize(int mySize) {
+    size = mySize;
 }
 
-std::string Game::getName() {
-	return name;
+// print current board to console
+void Board::printBoard() {
+std::cout << std::endl;
+    char arr[numFiles] = { 'A','B','C','D','E','F','G','H' };
+    int filePicker = 0;
+    for (int j = 0; j < numFiles; j++) {
+        for (int i = 0; i < size * 2 + 1; i++) {
+            if (i == ceil(size)) {
+                std::cout << arr[filePicker];
+                filePicker++;
+            }
+            else
+                std::cout << " ";
+
+        }
+    }
+    std::cout << std::endl << std::endl;
+    int invert = 1;
+    for (int i = 0; i < numRanks; i++) {
+        invert *= -1;
+        for (int k = 0; k < size; k++) {
+            if (invert == -1)
+                printRank("white", i, k);
+            else
+                printRank("black",i, k);  
+            if (k == ceil(size / 2))
+                std::cout << "  " <<  i+1;
+            std::cout << std::endl;
+        }
+    }
+  
+
 }
 
-void Game::pushMove(std::string myMove) {
-	moves.push_back(myMove);
+// helper function for printBoard ; prints a rank (row)
+void Board::printRank(std::string row, int rank, int squareHeight) {
+    int currFile = 0;
+    if (row == "white") {
+        for (int j = 0; j < numFiles/2; j++) {
+            for (int i = 0; i < size*2+1; i++) {
+                if (i == ceil(size) && squareHeight == ceil(size / 2) && board[rank][currFile].getName() != "") {
+                    std::cout << board[rank][currFile].getSymbol();
+                }
+                else
+                    std::cout << char(WHITE_SQUARE);
+
+            }
+            currFile++; // increment currFile after writing one square
+            for (int i = 0; i < size*2 + 1; i++) {
+                if (i== ceil(size) && squareHeight == ceil(size / 2) && board[rank][currFile].getName() != "") {
+                    std::cout << board[rank][currFile].getSymbol();
+                }
+                else
+                    std::cout << char(BLACK_SQUARE);
+            }
+            currFile++; // increment currFile after writing one square
+        }
+    }
+    else if (row == "black") {
+        for (int j = 0; j < numFiles / 2; j++) {
+            for (int i = 0; i < size * 2 + 1; i++) {
+                if (i== ceil(size) && squareHeight == ceil(size/2) && board[rank][currFile].getName() != "") {
+                    std::cout << board[rank][currFile].getSymbol();
+                }
+                else
+                    std::cout << char(BLACK_SQUARE);
+            }
+            currFile++; // increment currFile after writing one square
+            for (int i = 0; i < size * 2 + 1; i++) {
+                if (i== ceil(size) && squareHeight == ceil(size / 2) && board[rank][currFile].getName() != "") {
+                    std::cout << board[rank][currFile].getSymbol();
+                }
+                else
+                    std::cout << char(WHITE_SQUARE);
+            }
+            currFile++; // increment currFile after writing one square
+        }
+    }
+
 }
 
-void Game::playGame(std::vector<std::string> myMoves, Board myBoard) {
-	for (int i = 0; i < myMoves.size(); i++) {
-		playMove(myMoves[i], myBoard);
-	}
+// set board to natural position
+void Board::setBoard() {
+    // initialize middle empty squares
+    for (int i = 0; i < numFiles; i++) {
+        Piece temp;
+        board[2][i] = temp;
+        board[3][i] = temp;
+        board[4][i] = temp;
+        board[5][i] = temp;
+    }
+    // initialize black pawns
+    for (int i = 0; i < numFiles; i++) {
+        Piece blackPawn("pawn", "black", "P");
+        board[6][i] = (blackPawn);
+    }
+    // initialize black pieces
+    for (int i = numFiles-1; i >= 0; i--){
+        switch (i) {
+        case 0:
+        case 7:
+        {
+            Piece tempRook = Piece("rook", "black","R");
+            board[7][i] = tempRook;
+        }
+            break;
+        case 1:
+        case 6:
+        {
+            Piece tempKnight = Piece("knight", "black","N");
+            board[7][i] = tempKnight;
+        }
+            break;
+        case 2:
+        case 5:
+        {
+            Piece tempBishop = Piece("bishop", "black","B");
+            board[7][i] = tempBishop;
+        }
+            break;
+        case 4: 
+        {
+            Piece tempQueen = Piece("queen", "black","Q");
+            board[7][i] = tempQueen;
+        }
+            break;
+        case 3:
+        {
+            Piece tempKing = Piece("king", "black","K");
+            board[7][i] = tempKing;
+        }
+            break;
+        default:
+            std::cout << "Board Initiation Problem." << std::endl;
+        }
+    }
+
+
+    // initialize white pawns
+    for (int i = 0; i < numFiles; i++) {
+        Piece whitePawn = Piece("pawn", "white","P");
+        board[1][i] = whitePawn;
+    }
+
+    // initialize white pieces
+    for (int i = numFiles - 1; i >= 0; i--) {
+        if (i == 7 || i == 0) {
+            Piece tempRook = Piece("rook", "white","R");
+            board[0][i] = tempRook;
+        }
+        else if (i == 6 || i == 1) {
+            Piece tempKnight = Piece("knight", "white","N");
+            board[0][i] = tempKnight;
+        }
+        else if (i == 5 || i == 2) {
+            Piece tempBishop = Piece("bishop", "white","B");
+            board[0][i] = tempBishop;
+        }
+        else if (i == 4) {
+            Piece tempQueen = Piece("queen", "white","Q");
+            board[0][i] = tempQueen;
+        }
+        else if (i == 3) {
+            Piece tempKing = Piece("king", "white","K");
+            board[0][i] = tempKing;
+        }
+        else
+            std::cout << "Board Initiation Problem." << std::endl;
+       
+    }
 }
 
-void Game::playMove(std::string myMove, Board myBoard) {
-	// convert to lowercase
-	for (int i = 0; myMove[i]; i++) {
-		myMove[i] = tolower(myMove[i]);
-	}
-	//myBoard.processMove(myMove, turn);
 
-}
+
+
