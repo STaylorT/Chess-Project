@@ -3,13 +3,11 @@
 Piece::Piece() {
     name = "";
     color = "";
-    symbol = "";
 }
 
-Piece::Piece(std::string myName, std::string myColor, std::string mySymbol) {
+Piece::Piece(std::string myName, std::string myColor) {
     name = myName;
     color = myColor;
-    symbol = mySymbol;
 }
 
 void Piece::setName(std::string myName) {
@@ -23,7 +21,4 @@ std::string Piece::getName() {
 }
 std::string Piece::getColor() {
     return color;
-}
-std::string Piece::getSymbol() {
-    return symbol;
 }
