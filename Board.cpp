@@ -13,15 +13,27 @@ Board::Board() {
 
 // processing given move
 void Board::processMove(std::string myMove) {
-    if (myMove == "e4") {
-        Piece pawn("P", "white");
-        board[5][4] = pawn;
+
+    // pawn moves
+    if (myMove.length() == 2) {
+        char file = myMove[0];
+        char rank = myMove[1];
+        for (auto i = 1; i < numFiles; i++) {
+            for (auto j = 0; j < numRanks; j++) {
+                if (board[i][j].getName() == "P" && board[i][j].getSquare()[0] == file){
+                    std::cout << "HEE";
+                    board[i][j + 1].setName("P");
+                }
+            }
+        }
     }
     else
         std::cout << "invalid move" << std::endl;
 }
 // allows for changing size of board
 void Board::setSize(int mySize) {
+    if (mySize < 0 || mySize > 6)
+        mySize = 3;
     size = mySize;
 }
 
@@ -196,3 +208,7 @@ void Board::setBoard() {
        
     }
 }
+
+
+
+
