@@ -11,24 +11,29 @@ Board::Board() {
     size = 3;
 }
 
-// processing given move
-void Board::processMove(std::string myMove) {
-
-    // pawn moves
-    if (myMove.length() == 2) {
-        char file = myMove[0];
-        char rank = myMove[1];
-        for (auto i = 1; i < numFiles; i++) {
-            for (auto j = 0; j < numRanks; j++) {
-                if (board[i][j].getName() == "P" && board[i][j].getSquare()[0] == file){
-                    std::cout << "HEE";
-                    board[i][j + 1].setName("P");
-                }
-            }
-        }
+// PARSE MOVE
+int Board::parseMove(std::string myMove) {
+    // vector to store individual tokens of the move for easier processing
+    std::vector<char> moveVec;
+    for (auto i = 0; i < myMove.length(); i++) {
+        if (!isalnum(myMove[i]))
+            return -1;
+        moveVec.push_back(myMove[i]);
     }
-    else
-        std::cout << "invalid move" << std::endl;
+    processMove(moveVec, myMove);
+}
+
+// processing given move
+void Board::processMove(std::vector<char> myVec, std::string myMove) {
+    for (auto i = 0; i < myVec.size(); i++) {
+        std::cout << "Token " << i << " : " << myVec[i] << std::endl;
+    }
+    // pawn moves
+    if (myVec.size() == 2) {
+        file whatFile = myVec[0];
+        board[whatFile][]
+
+    }
 }
 // allows for changing size of board
 void Board::setSize(int mySize) {
@@ -130,7 +135,7 @@ void Board::setBoard() {
     }
     // initialize black pawns
     for (int i = 0; i < numFiles; i++) {
-        Piece blackPawn("P", "black");
+        Piece blackPawn("P", "black", 6, 1);
         board[6][i] = (blackPawn);
     }
     // initialize black pieces
@@ -139,33 +144,33 @@ void Board::setBoard() {
         case 0:
         case 7:
         {
-            Piece tempRook = Piece("R", "black");
+            Piece tempRook = Piece("R", "black", 7, i);
             board[7][i] = tempRook;
         }
             break;
         case 1:
         case 6:
         {
-            Piece tempKnight = Piece("N", "black");
+            Piece tempKnight = Piece("N", "black", 7, i);
             board[7][i] = tempKnight;
         }
             break;
         case 2:
         case 5:
         {
-            Piece tempBishop = Piece("B", "black");
+            Piece tempBishop = Piece("B", "black", 7, i);
             board[7][i] = tempBishop;
         }
             break;
         case 3: 
         {
-            Piece tempQueen = Piece("Q", "black");
+            Piece tempQueen = Piece("Q", "black", 7, i);
             board[7][i] = tempQueen;
         }
             break;
         case 4:
         {
-            Piece tempKing = Piece("K", "black");
+            Piece tempKing = Piece("K", "black", 7, i);
             board[7][i] = tempKing;
         }
             break;
@@ -177,30 +182,30 @@ void Board::setBoard() {
 
     // initialize white pawns
     for (int i = 0; i < numFiles; i++) {
-        Piece whitePawn = Piece("P", "white");
+        Piece whitePawn = Piece("P", "white", 1, i);
         board[1][i] = whitePawn;
     }
 
     // initialize white pieces
     for (int i = numFiles - 1; i >= 0; i--) {
         if (i == 7 || i == 0) {
-            Piece tempRook = Piece("R", "white");
+            Piece tempRook = Piece("R", "white", 0, i);
             board[0][i] = tempRook;
         }
         else if (i == 6 || i == 1) {
-            Piece tempKnight = Piece("N", "white");
+            Piece tempKnight = Piece("N", "white", 0, i);
             board[0][i] = tempKnight;
         }
         else if (i == 5 || i == 2) {
-            Piece tempBishop = Piece("B", "white");
+            Piece tempBishop = Piece("B", "white", 0, i);
             board[0][i] = tempBishop;
         }
         else if (i == 3) {
-            Piece tempQueen = Piece("Q", "white");
+            Piece tempQueen = Piece("Q", "white", 0, i);
             board[0][i] = tempQueen;
         }
         else if (i == 4) {
-            Piece tempKing = Piece("K", "white");
+            Piece tempKing = Piece("K", "white", 0, i);
             board[0][i] = tempKing;
         }
         else
@@ -208,7 +213,4 @@ void Board::setBoard() {
        
     }
 }
-
-
-
 
