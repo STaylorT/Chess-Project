@@ -12,16 +12,24 @@
 using namespace std;
 
 int main(){
+	// initializing main board
 	Board board1 = Board();
+	// determine size of board (user input)
 	int size = 0;
-	cout << "Enter size of board: ";
+	cout << "Enter size(1-6) of board [default: 3]: ";
 	cin >> size;
 	board1.setSize(size);
 	board1.printBoard();
+
+
+
+
 	string move;
 	cout << "Enter a move: (E4 Only):: ";
 	cin >> move;
-	board1.processMove(move);
+	int parseCheck = board1.parseMove(move);
+	if (parseCheck < 0)
+		std::cout << "Invalid move syntax." << std::endl;
 	board1.printBoard();
 
 	return 0;
