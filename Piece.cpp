@@ -16,6 +16,14 @@ Piece::Piece(std::string myName, std::string myColor, std::string mySquare) {
     square = mySquare;
 }
 
+Piece::Piece(std::string myName, std::string myColor, int myFile, int myRank) {
+    name = myName;
+    color = myColor;
+    square = "unknown";
+    file = myFile;
+    rank = myRank;
+}
+
 void Piece::setName(std::string myName) {
     name = myName;
 }
@@ -33,4 +41,10 @@ std::string Piece::getColor() {
 }
 std::string Piece::getSquare() {
     return square;
+}
+int Piece::getRank() {
+    return rank;
+}
+int Piece::getFile() {
+    return file;
 }
