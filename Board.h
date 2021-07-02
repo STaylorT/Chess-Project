@@ -7,9 +7,8 @@
 const int numFiles = 8;
 const int numRanks = 8;
 
-enum file {a, b, c,d, e, f, g, h};
+enum file {a, b, c, d, e, f, g, h};
 
-std::map<char, file> filemap = boost::assign::map_list_of('A', file::a)('B', file::b)('C', file::c)('D', file::d)('E', file::e)('F', file::f)('G', file::g)('H', file::h);
 
 #include "Piece.h"
 
