@@ -11,6 +11,8 @@ Board::Board() {
     size = 3;
 }
 
+std::map<char, int> file_map{ {'a',0}, {'b',1}, {'c',2}, {'d',3}, {'e',4}, {'f',5}, {'g',6}, {'h',7} };
+
 // PARSE MOVE
 int Board::parseMove(std::string myMove) {
     // vector to store individual tokens of the move for easier processing
@@ -21,6 +23,7 @@ int Board::parseMove(std::string myMove) {
         moveVec.push_back(myMove[i]);
     }
     processMove(moveVec, myMove);
+    return 0;
 }
 
 // processing given move
@@ -30,9 +33,8 @@ void Board::processMove(std::vector<char> myVec, std::string myMove) {
     }
     // pawn moves
     if (myVec.size() == 2) {
-        file whatFile = myVec[0];
-        board[whatFile][]
-
+      int whatFile = file_map[myVec[0]]; // file number
+       std::cout << whatFile << std::endl;
     }
 }
 // allows for changing size of board
