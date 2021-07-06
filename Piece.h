@@ -17,6 +17,8 @@ public:
     void setColor(std::string myColor);
     void setName(std::string myName);
     void setSquare(std::string mySquare);
+    void setRank(int myRank);
+    void setFile(int myFile);
     std::string getColor();
     std::string getName();
     std::string getSquare();
