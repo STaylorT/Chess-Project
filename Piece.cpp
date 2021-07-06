@@ -33,6 +33,12 @@ void Piece::setColor(std::string myColor) {
 void Piece::setSquare(std::string mySquare) {
     square = mySquare;
 }
+void Piece::setRank(int myRank) {
+    rank = myRank;
+}
+void Piece::setFile(int myFile) {
+    file = myFile;
+}
 std::string Piece::getName() {
     return name;
 }
