@@ -27,7 +27,7 @@ int main(){
 	string move;
 	cout << "Enter a move: (E4 Only):: ";
 	cin >> move;
-	int parseCheck = board1.parseMove(move);
+	int parseCheck = board1.parseMove(board1,move);
 	if (parseCheck < 0)
 		std::cout << "Invalid move syntax." << std::endl;
 	board1.printBoard();
