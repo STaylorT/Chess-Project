@@ -14,18 +14,19 @@ enum file {a, b, c, d, e, f, g, h};
 
 class Board {
 private:
-    Piece board[numRanks][numFiles];
     std::string name;
     std::vector<std::string> moves;
     int size;
 public:
+    Piece board[numRanks][numFiles];
     Board();
     void printBoard();
     void setBoard();
     void printRank(std::string row, int currRank, int squareHeight);
     void setSize(int mySize);
-    int parseMove(std::string myMove);
-    void processMove(std::vector<char> myVec, std::string myMove);
+    int parseMove(Board &myBoard, std::string myMove);
+    void processMove(Board &myBoard, std::vector<char> myVec, std::string myMove);
+    void updateBoard(Board &myBoard,int prevFile, int prevRank, int curFile, int curRank);
 
 };
 
