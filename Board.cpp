@@ -14,7 +14,7 @@ Board::Board() {
 std::map<char, int> file_map{ {'a',0}, {'b',1}, {'c',2}, {'d',3}, {'e',4}, {'f',5}, {'g',6}, {'h',7} };
 
 // PARSE MOVE
-int Board::parseMove(std::string myMove) {
+int Board::parseMove(Board &myBoard, std::string myMove) {
     // vector to store individual tokens of the move for easier processing
     std::vector<char> moveVec;
     for (auto i = 0; i < myMove.length(); i++) {
@@ -22,12 +22,12 @@ int Board::parseMove(std::string myMove) {
             return -1;
         moveVec.push_back(myMove[i]);
     }
-    processMove(moveVec, myMove);
+    processMove(myBoard, moveVec, myMove);
     return 0;
 }
 
 // processing given move
-void Board::processMove(std::vector<char> myVec, std::string myMove) {
+void Board::processMove(Board &myBoard, std::vector<char> myVec, std::string myMove) {
     for (auto i = 0; i < myVec.size(); i++) {
         std::cout << "Token " << i << " : " << myVec[i] << std::endl;
     }
@@ -35,7 +35,24 @@ void Board::processMove(std::vector<char> myVec, std::string myMove) {
     if (myVec.size() == 2) {
       int whatFile = file_map[myVec[0]]; // file number
        std::cout << whatFile << std::endl;
+    
+       bool pawnRank = 0;
+       for (auto i = 0; i < numRanks; i++) {
+           if (myBoard.board[whatFile][i].getName() == "P") {
+               pawnRank = 1;
+               myBoard.board[whatFile][i].setRank(i - 1);
+               updateBoard(myBoard, myBoard.board[whatFile][i].getFile(), myBoard.board[whatFile][i].getRank() - 1, myBoard.board[whatFile][i].getFile(), myBoard.board[whatFile][i].getRank());
+           }
+       }
+
     }
+}
+
+void Board::updateBoard(Board &myBoard,int prevFile, int prevRank, int curFile, int curRank) {
+    std::cout << curRank << std::endl;
+    Piece blank;
+    myBoard.board[curFile][curRank] = myBoard.board[prevFile][prevRank];
+    myBoard.board[prevFile][prevRank] = blank;
 }
 // allows for changing size of board
 void Board::setSize(int mySize) {
