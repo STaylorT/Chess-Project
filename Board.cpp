@@ -11,6 +11,7 @@ Board::Board() {
     size = 3;
 }
 
+// map for 'a' to 0;
 std::map<char, int> file_map{ {'a',0}, {'b',1}, {'c',2}, {'d',3}, {'e',4}, {'f',5}, {'g',6}, {'h',7} };
 
 // PARSE MOVE
@@ -48,6 +49,7 @@ void Board::processMove(Board &myBoard, std::vector<char> myVec, std::string myM
     }
 }
 
+// helper function after move is made
 void Board::updateBoard(Board &myBoard,int prevFile, int prevRank, int curFile, int curRank) {
     std::cout << curRank << std::endl;
     Piece blank;
@@ -65,7 +67,7 @@ void Board::setSize(int mySize) {
 void Board::printBoard() {
 std::cout << std::endl;
     char arr[numFiles] = { 'A','B','C','D','E','F','G','H' };
-    int filePicker = 0;
+    int filePicker = 0; // keep track of what file to print
     for (int j = 0; j < numFiles; j++) {
         for (int i = 0; i < size * 2 + 1; i++) {
             if (i == ceil(size)) {
